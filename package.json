@@ -1,0 +1,17 @@
+{
+  "name": "aaa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "botbuilder": "^3.7.0",
+    "requestify": "^0.2.5",
+    "restify": "^4.3.0"
+  },
+  "devDependencies": {}
+}
