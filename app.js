@@ -19,7 +19,6 @@ var connector = new builder.ChatConnector({
 });
 console.log('%s | %s', process.env.MICROSOFT_APP_ID, process.env.MICROSOFT_APP_PASSWORD); 
 var bot = new builder.UniversalBot(connector);
-
 server.post('/api/messages', connector.listen());
 
 //=========================================================
@@ -35,10 +34,7 @@ server.post('/api/messages', connector.listen());
 
 
 //對話cdoe
-var bot = new builder.UniversalBot(connector, function (session) {
-
-
-
+bot.dialog('/', function (session) {
 	var notTag = session.message.text.indexOf("不");
 	var feelHot = session.message.text.indexOf("熱");//確認是否有說出關鍵字熱
     var feelCool = session.message.text.indexOf("冷");//確認是否有說出關鍵字冷
@@ -57,7 +53,6 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
 
 });
-
 
 
 function Invokpostdata(open_home,open_room,Airconditioning,temperature)
