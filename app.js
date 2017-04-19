@@ -31,13 +31,13 @@ bot.dialog('/', function (session) {
     var closeDoorFlag = session.message.text.indexOf("關門");//確認是否有說出關鍵字冷
 	
 	if(openDoorFlag == -1 && closeDoorFlag == -1){
-		session.send("老大，好久不見/n我可以幫你開門");
-	}else if(openDoorFlag != -1 && closeDoorFlag == -1) {
+		session.send("老大，好久不見  我可以幫你開門");
+	}else if(closeDoorFlag != -1 && openDoorFlag == -1) {
 		opendoor(0);
-		//session.send("老大! 門關了");
+		session.send("老大! 門關了");
 	}else if(openDoorFlag != -1 && closeDoorFlag == -1) {
 		opendoor(1);
-		//session.send("老大! 門開了");
+		session.send("老大! 門開了");
 	}else {
 		session.send("抱歉我不知道你想說什麼");
 	}
@@ -47,23 +47,10 @@ bot.dialog('/', function (session) {
 
 function opendoor(door_open){
 	if(door_open == 1){
-		requestify.get('bandgg.ddns.net:1888/DoorOpen', { 
-    		params: {
-      			door_flag: 1
-    		}
-		}).then(function(response) {
-      		session.send("老大! 門開了");
-  		});
+		requestify.get('http://bandgg.ddns.net:1888/DoorOpen?door_flag=1');
 	} else {
-		requestify.get('bandgg.ddns.net:1888/DoorOpen', { 
-    		params: {
-      			door_flag: 0
-    		}
-		}).then(function(response) {
-      		session.send("老大! 門關了");
-  		});
+		requestify.get('http://bandgg.ddns.net:1888/DoorOpen?door_flag=0');
 	}
-	
 }
 
 
