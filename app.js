@@ -21,38 +21,50 @@ console.log('%s | %s', process.env.MICROSOFT_APP_ID, process.env.MICROSOFT_APP_P
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-//=========================================================
-// Bots Dialogs
-//=========================================================
 
-// bot.dialog('/', function (session) {
-//     session.send("Hello World");
-// });
 
-// Create your bot with a function to receive messages from the u
-// Listen for messages from users 
 
 
 //對話cdoe
 bot.dialog('/', function (session) {
-	var notTag = session.message.text.indexOf("不");
-	var feelHot = session.message.text.indexOf("熱");//確認是否有說出關鍵字熱
-    var feelCool = session.message.text.indexOf("冷");//確認是否有說出關鍵字冷
+	var openDoorFlag = session.message.text.indexOf("開門");//確認是否有說出關鍵字熱
+    var closeDoorFlag = session.message.text.indexOf("關門");//確認是否有說出關鍵字冷
 	
-	if(feelHot == -1 && feelCool == -1 || notTag >= 0){
-		session.send("你好，房間有什麼問題可以跟我說");
-	}else if(feelHot != -1 && feelCool == -1) {
-		session.send("我去調低溫度");
-		Invokpostdata(0,0,1,25);
-	}else if(feelCool != -1 && feelHot == -1) {
-		session.send("我去調高溫度");
-		Invokpostdata(0,0,1,30);
+	if(openDoorFlag == -1 && closeDoorFlag == -1){
+		session.send("老大，好久不見/n我可以幫你開門");
+	}else if(openDoorFlag != -1 && closeDoorFlag == -1) {
+		opendoor(0);
+		//session.send("老大! 門關了");
+	}else if(openDoorFlag != -1 && closeDoorFlag == -1) {
+		opendoor(1);
+		//session.send("老大! 門開了");
 	}else {
 		session.send("抱歉我不知道你想說什麼");
 	}
 
 
 });
+
+function opendoor(door_open){
+	if(door_open == 1){
+		requestify.get('bandgg.ddns.net:1888/DoorOpen', { 
+    		params: {
+      			door_flag: 1
+    		}
+		}).then(function(response) {
+      		session.send("老大! 門開了");
+  		});
+	} else {
+		requestify.get('bandgg.ddns.net:1888/DoorOpen', { 
+    		params: {
+      			door_flag: 0
+    		}
+		}).then(function(response) {
+      		session.send("老大! 門關了");
+  		});
+	}
+	
+}
 
 
 function Invokpostdata(open_home,open_room,Airconditioning,temperature)
