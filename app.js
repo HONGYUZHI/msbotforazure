@@ -39,8 +39,8 @@ http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
    
 //Create chat bot
 var connector = new builder.ChatConnector({
-    appId: '285ad161-2218-40a7-91d8-8d47a3941bf1',
-    appPassword: 'YV7kCQ5fraiQ0DqAZQNHV7G'
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 // var connector = new builder.ChatConnector({
